@@ -12,7 +12,7 @@
 
 ## 🌟 What is it & What does it do?
 
-**NOMX RIP Exporter** takes raw `.rip` 3D mesh files (typically dumped using tools like NinjaRipper) and effortlessly converts them into widely supported 3D formats. It will automatically detect texture associations (DDS) and construct the model correctly, making them ready for your 3D scenes or game engines.
+**NOMX RIP Exporter** takes raw `.rip` 3D mesh files (typically dumped using tools like [NinjaRipper](https://www.ninjaripper.com)) and effortlessly converts them into widely supported 3D formats. It will automatically detect texture associations (DDS) and construct the model correctly, making them ready for your 3D scenes or game engines.
 
 ### 🚀 Key Features
 
@@ -48,12 +48,12 @@ git clone https://github.com/N-OMAX/NOMX-RIP-Exporter.git
 ## 🛠️ How to Use
 
 1. Ensure you have **Python 3** installed on your Windows PC.
-2. Double-click `NinjaRipper-OBJ.py` to open the graphic interface.
+2. Double-click `NOMX-RIP-TO-OBJ.py` to open the graphic interface.
 3. Click on **📂 SELECT FILES** and pick all the `.rip` files you want to convert.
 4. Click **🚀 START EXPORT** to begin. The terminal will show live progress logs.
 5. All `.obj` and `.mtl` files will be saved right next to your original `.rip` files.
 
-*Alternatively, you can just drag and drop your `.rip` files directly onto `NinjaRipper-OBJ.py` in your file explorer to convert instantly without the GUI!*
+*Alternatively, you can just drag and drop your `.rip` files directly onto `NOMX-RIP-TO-OBJ.py` in your file explorer to convert instantly without the GUI!*
 
 ---
 

@@ -239,11 +239,11 @@ def create_glb(vertices, normals, uvs, faces, textures, dds_data, output_path, m
         print(f"✖ ERROR creating GLB: {e}")
         traceback.print_exc()
 
-def convert_rip_to_obj(input_path):
+def convert_rip_to_obj(input_path, custom_output_dir=None):
     print(f"Processing: {input_path}\n")
     
     base_name = os.path.splitext(os.path.basename(input_path))[0]
-    output_dir = os.path.dirname(input_path) if os.path.dirname(input_path) else "."
+    output_dir = custom_output_dir if custom_output_dir else (os.path.dirname(input_path) if os.path.dirname(input_path) else ".")
     
     if EXPORT_GLB:
         output_path = os.path.join(output_dir, base_name + ".glb")
@@ -405,6 +405,7 @@ class App:
         
         root.configure(bg=bg_color)
         self.files_to_process = []
+        self.custom_output_dir = None
 
         # Header Title
         title_lbl = tk.Label(root, text="NOMX RIP EXPORTER", font=("Impact", 24), bg=bg_color, fg=accent_color)
@@ -420,6 +421,9 @@ class App:
         # Style buttons completely flat with active colors
         self.btn_select = tk.Button(frame_controls, text="📂 SELECT FILES", command=self.select_files, width=16, font=("Segoe UI", 10, "bold"), bg="#3A3A4A", fg="#FFFFFF", relief=tk.FLAT, activebackground="#505060", activeforeground="#FFFFFF", cursor="hand2")
         self.btn_select.pack(side=tk.LEFT, padx=15, pady=10)
+
+        self.btn_outdir = tk.Button(frame_controls, text="📁 SET OUTPUT (OPT)", command=self.select_output_dir, width=18, font=("Segoe UI", 10, "bold"), bg="#3A3A4A", fg="#FFFFFF", relief=tk.FLAT, activebackground="#505060", activeforeground="#FFFFFF", cursor="hand2")
+        self.btn_outdir.pack(side=tk.LEFT, padx=(0, 15), pady=10)
 
         self.btn_convert = tk.Button(frame_controls, text="🚀 START EXPORT", command=self.start_conversion, state=tk.DISABLED, width=16, font=("Segoe UI", 10, "bold"), bg=accent_color, fg="#000000", relief=tk.FLAT, activebackground=accent_hover, activeforeground="#000000", cursor="hand2")
         self.btn_convert.pack(side=tk.LEFT, pady=10)
@@ -455,6 +459,13 @@ class App:
         def flush(self):
             pass
 
+    def select_output_dir(self):
+        folder = filedialog.askdirectory(title="Select Optional Output Directory")
+        if folder:
+            self.custom_output_dir = folder
+            print(f"[*] Optional output directory set: {self.custom_output_dir}")
+            self.lbl_status.config(text="OUTPUT DIR SET", fg="#00A8FF")
+
     def select_files(self):
         files = filedialog.askopenfilenames(
             title="Select .rip files",
@@ -484,7 +495,7 @@ class App:
                 print(f"\n[>>] PROGRESS: QUEUE ITEM {idx}/{len(self.files_to_process)}")
                 print("-" * 50)
                 if os.path.isfile(file_path):
-                    convert_rip_to_obj(file_path)
+                    convert_rip_to_obj(file_path, self.custom_output_dir)
                 else:
                     print(f"[!] Skipping: {file_path} (not a file)")
             
